@@ -22,6 +22,10 @@ function gerarNumerosOrdenados() {
 
 function gerarHorarios() {
   const horaSelecionada = document.getElementById("hora").value;
+  if(horaSelecionada > 23){
+    alert("Hora inválida")
+    return
+  }
   const horariosGerados = [];
   const minutosGerados = gerarNumerosOrdenados();
 
@@ -65,7 +69,7 @@ function clipboard() {
       .map((pre) => pre.textContent.trim())
       .join("\n\n");
     navigator.clipboard.writeText(textoHorarios);
-    alert("Texto copiado com sucesso!");
+    alert("Horários copiados para área de transferência!");
   } catch (error) {
     console.log(error);
   }
