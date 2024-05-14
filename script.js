@@ -44,13 +44,12 @@ function exibirHorarios(horarios) {
 
   const divHorario = document.createElement("pre");
   divHorario.classList.add("horario");
-  divHorario.textContent = `
-    ${horarios[0]} - ${horarios[1]} - ${horarios[2]} - ${horarios[3]}    
-
-    ${horarios[4]} - ${horarios[5]} - ${horarios[6]} - ${horarios[7]}    
-
-    ${horarios[8]} - ${horarios[9]} - ${horarios[10]} - ${horarios[11]}    
-    `;
+  const lines = [
+    `${horarios[0]} - ${horarios[1]} - ${horarios[2]} - ${horarios[3]}`,
+    `${horarios[4]} - ${horarios[5]} - ${horarios[6]} - ${horarios[7]}`,
+    `${horarios[8]} - ${horarios[9]} - ${horarios[10]} - ${horarios[11]}`,
+  ];
+  divHorario.textContent = lines[0] + "\n" + lines[1] + "\n" + lines[2];
 
   divHorarios.appendChild(divHorario);
 }
