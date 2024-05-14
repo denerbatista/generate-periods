@@ -42,11 +42,15 @@ function exibirHorarios(horarios) {
   const divHorarios = document.getElementById("horarios-gerados");
   divHorarios.innerHTML = ""; // Limpar horários anteriores
 
-  horarios.forEach((horario) => {
-    const divHorario = document.createElement("div");
-    divHorario.classList.add("horario");
-    divHorario.textContent = `${horario[0]}`;
+  const divHorario = document.createElement("pre");
+  divHorario.classList.add("horario");
+  divHorario.textContent = `
+    ${horarios[0]} - ${horarios[1]} - ${horarios[2]} - ${horarios[3]}    
 
-    divHorarios.appendChild(divHorario);
-  });
+    ${horarios[4]} - ${horarios[5]} - ${horarios[6]} - ${horarios[7]}    
+
+    ${horarios[8]} - ${horarios[9]} - ${horarios[10]} - ${horarios[11]}    
+    `;
+
+  divHorarios.appendChild(divHorario);
 }

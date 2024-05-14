@@ -1,40 +1,45 @@
 body {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
 }
 
 label {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
+  font-size: 1.5rem;
 }
 
-input[type="time"] {
-    width: 100px;
-    padding: 5px;
+input {
+  width: 200px;
+  margin-bottom: 1rem;
+  padding: 5px;
 }
 
 button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
+  padding: 8px 15px;
+  width: 212px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 #horarios-gerados {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .horario {
-    border: 1px solid #ccc;
-    padding: 5px;
-    text-align: center;
+  display: flex;
+  border: 1px solid #ccc;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
 }
