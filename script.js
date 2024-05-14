@@ -7,10 +7,11 @@ function gerarNumerosOrdenados() {
     let numeroAleatorio;
 
     // Gera um número aleatório entre 0 e 59
-    do {
-      numeroAleatorio = Math.floor(Math.random() * 60);
-    } while (numeros.includes(numeroAleatorio)); // Evita números repetidos
-
+    for (let tentativas = 0; tentativas < 100; tentativas++) {
+      do {
+        numeroAleatorio = Math.floor(Math.random() * 60);
+      } while (numeros.includes(numeroAleatorio));
+    }
     numeros.push(numeroAleatorio);
   }
 
