@@ -4,45 +4,15 @@ function gerarNumerosOrdenados() {
 
   while (numeros.size < 12) {
     let numeroAleatorio = Math.floor(Math.random() * 60); // Gera um número aleatório entre 0 e 59
-    numeros.add(numeroAleatorio);
+    if (!numeros.has(numeroAleatorio)) {
+      numeros.add(numeroAleatorio);
+    }
   }
 
   // Convertendo o Set para um array e ordenando
   numerosOrdenados.push(...Array.from(numeros).sort((a, b) => a - b));
 
   return numerosOrdenados;
-}
-
-function clipboard() {
-  try {
-    const divHorarios = document.getElementById("horarios-gerados");
-    const textoHorarios = divHorarios.textContent;
-    navigator.clipboard.writeText(textoHorarios);
-    alert("Horários copiados para área de transferencia!");
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-function exibirHorarios(horarios) {
-  const divHorarios = document.getElementById("horarios-gerados");
-  divHorarios.innerHTML = ""; // Limpar horários anteriores
-
-  const divHorario = document.createElement("pre");
-  divHorario.classList.add("horario");
-
-  for (let i = 0; i < horarios.length; i += 4) {
-    const linha = `${horarios[i]} - ${horarios[i + 1]} - ${horarios[i + 2]} - ${
-      horarios[i + 3]
-    }\n`;
-    divHorario.textContent += linha;
-  }
-
-  divHorarios.appendChild(divHorario);
-
-  setTimeout(() => {
-    clipboard();
-  }, 1000);
 }
 
 function gerarHorarios() {
@@ -78,3 +48,13 @@ function gerarVariosGrupos() {
   clipboard();
 }
 
+function clipboard() {
+  try {
+    const divHorarios = document.getElementById("horarios-gerados");
+    const textoHorarios = Array.from(divHorarios.querySelectorAll("pre")).map(pre => pre.textContent.trim()).join('\n\n');
+    navigator.clipboard.writeText(textoHorarios);
+    alert("Texto copiado com sucesso!");
+  } catch (error) {
+    console.log(error);
+  }
+}
