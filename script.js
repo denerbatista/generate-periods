@@ -3,17 +3,20 @@ function gerarNumerosOrdenados() {
   const numerosOrdenados = [];
 
   while (numeros.size < 12) {
-    let numeroAleatorio = Math.floor(Math.random() * 60); // Gera um número aleatório entre 0 e 59
-    if (!numeros.has(numeroAleatorio)) {
-      numeros.add(numeroAleatorio);
-    }
+    let numeroAleatorio;
+    do {
+      numeroAleatorio = Math.floor(Math.random() * 60); // Gera um número aleatório entre 0 e 59
+    } while (numeros.has(numeroAleatorio) || numerosOrdenados.includes(numeroAleatorio)); // Verifica se o número já existe no conjunto ou no array de números ordenados
+    numeros.add(numeroAleatorio);
+    numerosOrdenados.push(numeroAleatorio);
   }
 
-  // Convertendo o Set para um array e ordenando
-  numerosOrdenados.push(...Array.from(numeros).sort((a, b) => a - b));
+  // Ordenando o array de números ordenados
+  numerosOrdenados.sort((a, b) => a - b);
 
   return numerosOrdenados;
 }
+
 
 function gerarHorarios() {
   const horaSelecionada = document.getElementById("hora").value;
@@ -21,7 +24,9 @@ function gerarHorarios() {
 
   for (let i = 0; i < 12; i++) {
     const minutosGerados = gerarNumerosOrdenados();
-    const horarioGerado = `${horaSelecionada.toString().padStart(2, "0")}:${minutosGerados[i].toString().padStart(2, "0")}`;
+    const horarioGerado = `${horaSelecionada
+      .toString()
+      .padStart(2, "0")}:${minutosGerados[i].toString().padStart(2, "0")}`;
     horariosGerados.push(horarioGerado);
   }
 
@@ -38,7 +43,9 @@ function gerarVariosGrupos() {
     divHorario.classList.add("horario");
 
     for (let j = 0; j < horariosGrupo.length; j += 4) {
-      const linha = `${horariosGrupo[j]} - ${horariosGrupo[j + 1]} - ${horariosGrupo[j + 2]} - ${horariosGrupo[j + 3]}\n`;
+      const linha = `${horariosGrupo[j]} - ${horariosGrupo[j + 1]} - ${
+        horariosGrupo[j + 2]
+      } - ${horariosGrupo[j + 3]}\n`;
       divHorario.textContent += linha;
     }
 
@@ -51,7 +58,9 @@ function gerarVariosGrupos() {
 function clipboard() {
   try {
     const divHorarios = document.getElementById("horarios-gerados");
-    const textoHorarios = Array.from(divHorarios.querySelectorAll("pre")).map(pre => pre.textContent.trim()).join('\n\n');
+    const textoHorarios = Array.from(divHorarios.querySelectorAll("pre"))
+      .map((pre) => pre.textContent.trim())
+      .join("\n\n");
     navigator.clipboard.writeText(textoHorarios);
     alert("Texto copiado com sucesso!");
   } catch (error) {
