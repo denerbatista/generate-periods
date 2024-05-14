@@ -1,41 +1,27 @@
 function gerarNumerosOrdenados() {
-  // Gera um array vazio para armazenar os números
-  const numeros = [];
+  const numeros = new Set(); // Usando um Set para garantir unicidade
+  const numerosOrdenados = [];
 
-  // Gera 12 números aleatórios
-  for (let i = 0; i < 12; i++) {
-    let numeroAleatorio;
-
-    // Gera um número aleatório entre 0 e 59
-    for (let tentativas = 0; tentativas < 100; tentativas++) {
-      do {
-        numeroAleatorio = Math.floor(Math.random() * 60);
-      } while (numeros.includes(numeroAleatorio));
-    }
-    numeros.push(numeroAleatorio);
+  while (numeros.size < 12) {
+    let numeroAleatorio = Math.floor(Math.random() * 60); // Gera um número aleatório entre 0 e 59
+    numeros.add(numeroAleatorio);
   }
 
-  // Ordena o array em ordem crescente
-  numeros.sort((a, b) => a - b);
+  // Convertendo o Set para um array e ordenando
+  numerosOrdenados.push(...Array.from(numeros).sort((a, b) => a - b));
 
-  return numeros;
+  return numerosOrdenados;
 }
 
-function gerarHorarios() {
-  const horaSelecionada = document.getElementById("hora").value;
-  const horariosGerados = [];
-
-  for (let i = 0; i < 12; i++) {
-    const minutoGerado = gerarNumerosOrdenados();
-
-    const horarioGerado = `${horaSelecionada
-      .toString()
-      .padStart(2, "0")}:${minutoGerado[i].toString().padStart(2, "0")}`;
-
-    horariosGerados.push([horarioGerado]);
+function clipboard() {
+  try {
+    const divHorarios = document.getElementById("horarios-gerados");
+    const textoHorarios = divHorarios.textContent;
+    navigator.clipboard.writeText(textoHorarios);
+    alert("Horários copiados para área de transferencia!");
+  } catch (error) {
+    console.log(error);
   }
-
-  exibirHorarios(horariosGerados.sort((a, b) => a - b));
 }
 
 function exibirHorarios(horarios) {
@@ -44,12 +30,51 @@ function exibirHorarios(horarios) {
 
   const divHorario = document.createElement("pre");
   divHorario.classList.add("horario");
-  const lines = [
-    `${horarios[0]} - ${horarios[1]} - ${horarios[2]} - ${horarios[3]}`,
-    `${horarios[4]} - ${horarios[5]} - ${horarios[6]} - ${horarios[7]}`,
-    `${horarios[8]} - ${horarios[9]} - ${horarios[10]} - ${horarios[11]}`,
-  ];
-  divHorario.textContent = lines[0] + "\n" + lines[1] + "\n" + lines[2];
+
+  for (let i = 0; i < horarios.length; i += 4) {
+    const linha = `${horarios[i]} - ${horarios[i + 1]} - ${horarios[i + 2]} - ${
+      horarios[i + 3]
+    }\n`;
+    divHorario.textContent += linha;
+  }
 
   divHorarios.appendChild(divHorario);
+
+  setTimeout(() => {
+    clipboard();
+  }, 1000);
 }
+
+function gerarHorarios() {
+  const horaSelecionada = document.getElementById("hora").value;
+  const horariosGerados = [];
+
+  for (let i = 0; i < 12; i++) {
+    const minutosGerados = gerarNumerosOrdenados();
+    const horarioGerado = `${horaSelecionada.toString().padStart(2, "0")}:${minutosGerados[i].toString().padStart(2, "0")}`;
+    horariosGerados.push(horarioGerado);
+  }
+
+  return horariosGerados;
+}
+
+function gerarVariosGrupos() {
+  const divHorarios = document.getElementById("horarios-gerados");
+  divHorarios.innerHTML = ""; // Limpar horários anteriores
+
+  for (let i = 0; i < 5; i++) {
+    const horariosGrupo = gerarHorarios();
+    const divHorario = document.createElement("pre");
+    divHorario.classList.add("horario");
+
+    for (let j = 0; j < horariosGrupo.length; j += 4) {
+      const linha = `${horariosGrupo[j]} - ${horariosGrupo[j + 1]} - ${horariosGrupo[j + 2]} - ${horariosGrupo[j + 3]}\n`;
+      divHorario.textContent += linha;
+    }
+
+    divHorarios.appendChild(divHorario);
+  }
+
+  clipboard();
+}
+
