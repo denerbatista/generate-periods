@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Horários</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Gerador de Horários</h1>
+
+    <div class="container">
+        <label for="hora">Hora de escolha:</label>
+        <input type="number" id="hora" name="hora" min="00" max="23" required>
+
+        <button onclick="gerarHorarios()">Gerar Horários</button>
+
+        <div id="horarios-gerados"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
