@@ -1,18 +1,20 @@
 function gerarNumerosOrdenados() {
   const numeros = new Set(); // Usando um Set para garantir unicidade
-  const numerosOrdenados = [];
 
   while (numeros.size < 12) {
     let numeroAleatorio;
     do {
       numeroAleatorio = Math.floor(Math.random() * 60); // Gera um número aleatório entre 0 e 59
-    } while (numeros.has(numeroAleatorio) || numerosOrdenados.includes(numeroAleatorio)); // Verifica se o número já existe no conjunto ou no array de números ordenados
+    } while (numeros.has(numeroAleatorio)); // Verifica se o número já existe no conjunto
     numeros.add(numeroAleatorio);
-    numerosOrdenados.push(numeroAleatorio);
   }
+
+  // Converter o conjunto para um array
+  const numerosOrdenados = Array.from(numeros);
 
   // Ordenando o array de números ordenados
   numerosOrdenados.sort((a, b) => a - b);
+  console.log(numerosOrdenados)
 
   return numerosOrdenados;
 }
@@ -21,9 +23,9 @@ function gerarNumerosOrdenados() {
 function gerarHorarios() {
   const horaSelecionada = document.getElementById("hora").value;
   const horariosGerados = [];
+  const minutosGerados = gerarNumerosOrdenados();
 
   for (let i = 0; i < 12; i++) {
-    const minutosGerados = gerarNumerosOrdenados();
     const horarioGerado = `${horaSelecionada
       .toString()
       .padStart(2, "0")}:${minutosGerados[i].toString().padStart(2, "0")}`;
@@ -51,8 +53,9 @@ function gerarVariosGrupos() {
 
     divHorarios.appendChild(divHorario);
   }
-
-  clipboard();
+  setTimeout(() => {
+    clipboard();
+  }, 500);
 }
 
 function clipboard() {
